@@ -11,15 +11,15 @@ data class Field(
     var opened: Boolean = false
     var mined: Boolean = false
 
-    val unmarked: Boolean = !marked
-    val closed: Boolean = !opened
-    val safe: Boolean = !mined
-    val goalAchieved: Boolean = safe && opened || mined && marked
-    val qtdMinedNear: Int = near.filter { it.mined }.size
-    val isNearSafe: Boolean = near.map { it.safe }.reduce { result, safe -> result && safe }
+    val unmarked: Boolean get() = !marked
+    val closed: Boolean get() = !opened
+    val safe: Boolean get() = !mined
+    val goalAchieved: Boolean get() = safe && opened || mined && marked
+    val qtdMinedNear: Int get() = near.filter { it.mined }.size
+    val isNearSafe: Boolean get() = near.map { it.safe }.reduce { result, safe -> result && safe }
 
-    fun addNear(near: Field) {
-        near.addNear(near)
+    fun addNear(field: Field) {
+        near.add(field)
     }
 
     fun onEvent(callback: (Field, EventField) -> Unit) {
